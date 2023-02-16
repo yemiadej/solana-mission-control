@@ -8,7 +8,7 @@ pub_key = "ChjhgsdfmmKahsa1hQNiXYU84ULeaYF1EH15n"
 vote_key = "2oxQJ1qpgUZU9JU8sdwerasdf1GzHkYfRDgDQY9dpH5mgGn"
 
 [enable_alerts]
-enable_telegram_alerts = true
+enable_telegram_alerts = false
 enable_email_alerts = false
 
 [regular_status_alerts]

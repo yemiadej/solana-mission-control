@@ -107,4 +107,10 @@ sudo systemctl enable solana_mc.service
 
 sudo systemctl start solana_mc.service
 
+if systemctl is-active --quiet solana_mc.service ; then
+    echo "solana-mc service is running"
+else
+    echo "solana-mc service is not running"
+fi
+    
 echo "** Done **"

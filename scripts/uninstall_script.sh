@@ -2,6 +2,9 @@
 
 set -e
 
+INSTALL_PATH=$HOME/solana-mission-control
+INSTALL_BINARY=$HOME/go/bin/solana-mc
+
 cd $HOME
 echo "------ Building and running the code --------"
 
@@ -12,15 +15,21 @@ if systemctl list-units --full -all | grep -i solana_mc.service ; then
   echo "Disabling solana_mc service."
   sudo systemctl disable solana_mc.service
   #Remove solana-mc service file
-  if ! sudo rm /etc/systemd/system/solana_mc.service; then
+  if ! sudo rm /lib/systemd/system/solana_mc.service; then
     echo "Unable to remove solana-mc service file"
   else
     echo "Successfully removed systemctl service file for solana-mc"
   fi
 fi
 
-rm -rf $HOME/solana-mission-control
+if [ -f "${INSTALL_PATH}" ]; then
+  echo "Found solana-mc folder...removing it."
+  sudo rm -rf "${INSTALL_PATH}"
+fi
 
-rm $HOME/go/bin/solana-mc
+if [ -f "${INSTALL_BINARY}" ]; then
+  echo "Found solana-mc binary...removing it."
+  sudo rm -rf "${INSTALL_BINARY}"
+fi
 
 echo "** Done with uninstalltion **"
