@@ -83,7 +83,7 @@ if [ ! -z "${SOLANA_BINARY_PATH}" ];
 then 
     SOLANA_BINARY="$SOLANA_BINARY_PATH"
 else 
-    SOLANA_BINARY="solana"
+    SOLANA_BINARY="$(which solana)"
 fi
 
 echo "----------- Setup solana-mc service------------"
