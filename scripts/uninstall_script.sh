@@ -22,14 +22,19 @@ if systemctl list-units --full -all | grep -i solana_mc.service ; then
   fi
 fi
 
-if [ -f "${INSTALL_PATH}" ]; then
+if [ -f "{$INSTALL_PATH}" ]; then
   echo "Found solana-mc folder...removing it."
-  sudo rm -rf "${INSTALL_PATH}"
+  sudo rm -rf "$INSTALL_PATH"
 fi
 
 if [ -f "${INSTALL_BINARY}" ]; then
   echo "Found solana-mc binary...removing it."
   sudo rm -rf "${INSTALL_BINARY}"
+fi
+
+solanamc_dir=~/.solana-mc
+if [ -d "$solanamc_dir" ]; then
+  sudo rm -rf $solanamc_dir
 fi
 
 echo "** Done with uninstalltion **"
