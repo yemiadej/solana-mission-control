@@ -2,8 +2,7 @@
 
 set -e
 
-
-echo "What network do you want to setup monitoring for? (0=devnet, 1=testnet, 2=mainnet )"?
+echo "What network do you want to setup monitoring for? (0=devnet, 1=testnet, 2=mainnet)"?
 read env
 
 if [ $env -eq 0 ]; then
@@ -52,7 +51,7 @@ cp example.config.toml ~/.solana-mc/config/config.toml
 
 cd $HOME
 
-echo "------ Updatig config fields with exported values -------"
+echo "------ Updating config fields with exported values -------"
 
 sed -i '/rpc_endpoint =/c\rpc_endpoint = "'"$RPC_ENDPOINT"'"' ~/.solana-mc/config/config.toml
 
