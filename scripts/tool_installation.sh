@@ -2,11 +2,47 @@
 
 set -e
 
+
+echo "What network do you want to setup monitoring for? (0=devnet, 1=testnet, 2=mainnet )"?
+read env
+
+if [ $env -eq 0 ]; then
+    networkName="devnet"
+    export RPC_ENDPOINT="https://api.devnet.solana.com" 
+    export NETWORK_RPC="https://api.devnet.solana.com" 
+elif [ $env -eq 1 ]; then
+    networkName="testnet"
+    export RPC_ENDPOINT="https://api.testnet.solana.com" 
+    export NETWORK_RPC="https://api.testnet.solana.com" 
+elif [ $env -eq 2 ]; then
+    networkName="mainnet"
+    export RPC_ENDPOINT="https://api.mainnet-beta.solana.com" 
+    export NETWORK_RPC="https://api.mainnet-beta.solana.com" 
+else 
+    echo "Invalid network exiting..."
+    exit 1
+fi;
+
+echo "What is your validator name?"
+read validatorName
+
+echo "What is your validator public key?"
+read validatorPubKey
+
+echo "What is your validator vote key?"
+read validatorVoteKey
+
+cd $HOME
+export VALIDATOR_NAME="${validatorName}" # Your validator name
+export PUB_KEY="${validatorPubKey}"  # Ex - export PUB_KEY="valmmK7i1AxXeiTtQgQZhQNiXYU84ULeaYF1EH1pa"
+export VOTE_KEY="${validatorVoteKey}" # Ex - export VOTE_KEY="2oxQJ1qpgUZU9JU84BHaoM1GzHkYfRDgDQY9dpH5mghh"
+
+
 cd $HOME
 
 echo "--------- Cloning solana-monitoring-tool -----------"
 
-git clone https://github.com/Chainflow/solana-mission-control.git
+git clone https://github.com/yemiadej/solana-mission-control.git
 
 cd solana-mission-control
 
@@ -28,16 +64,6 @@ sed -i '/pub_key =/c\pub_key = "'"$PUB_KEY"'"'  ~/.solana-mc/config/config.toml
 
 sed -i '/vote_key =/c\vote_key = "'"$VOTE_KEY"'"'  ~/.solana-mc/config/config.toml
 
-if [ ! -z "${TELEGRAM_CHAT_ID}" ] && [ ! -z "${TELEGRAM_BOT_TOKEN}" ];
-then 
-    sed -i '/tg_chat_id =/c\tg_chat_id = '"$TELEGRAM_CHAT_ID"''  ~/.solana-mc/config/config.toml
-
-    sed -i '/tg_bot_token =/c\tg_bot_token = "'"$TELEGRAM_BOT_TOKEN"'"'  ~/.solana-mc/config/config.toml
-
-    sed -i '/enable_telegram_alerts =/c\enable_telegram_alerts = 'true''  ~/.solana-mc/config/config.toml
-else
-    echo "---- Telgram chat id and/or bot token are empty --------"
-fi
 
 echo "------ Building and running the code --------"
 
