@@ -35,15 +35,20 @@ cd $HOME
 export VALIDATOR_NAME="${validatorName}" # Your validator name
 export PUB_KEY="${validatorPubKey}"  # Ex - export PUB_KEY="valmmK7i1AxXeiTtQgQZhQNiXYU84ULeaYF1EH1pa"
 export VOTE_KEY="${validatorVoteKey}" # Ex - export VOTE_KEY="2oxQJ1qpgUZU9JU84BHaoM1GzHkYfRDgDQY9dpH5mghh"
+solanamc_path=$HOME/solana-mission-control
 
 
 cd $HOME
 
 echo "--------- Cloning solana-monitoring-tool -----------"
 
-git clone https://github.com/yemiadej/solana-mission-control.git
-
-cd solana-mission-control
+if [ -d "$solanamc_path" ]; then
+    cd $solanamc_path
+    git pull origin main
+else
+    git clone https://github.com/yemiadej/solana-mission-control.git
+    cd solana-mission-control
+fi
 
 mkdir -p  ~/.solana-mc/config/
 
